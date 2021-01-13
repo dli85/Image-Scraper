@@ -24,3 +24,7 @@ if __name__ == '__main__':
 
     linklist = getLink()
 
+    for i in linklist:
+        current = imageCollector(i)
+
+        input('press a key to continue')
