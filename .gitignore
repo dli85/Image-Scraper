@@ -1,2 +1,4 @@
 .idea/
 __pycache__/
+linkCollector.py
+chapterList.txt
