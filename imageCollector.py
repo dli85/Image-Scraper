@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import shutil
 import os
-import PIL
+from PIL import Image
 
 class imageCollector:
     def __init__(self, link, path):
@@ -11,7 +11,6 @@ class imageCollector:
         self.tempPath = self.path + '\\temp\\'
         self.soupData = BeautifulSoup(requests.get(link).text, 'html.parser')
         self.title = self.soupData.findAll('h1')[0].getText().replace(',', '')
-        print(self.title)
 
         self.imageLinks = []
 
@@ -42,7 +41,6 @@ class imageCollector:
 
     def imgToPdf(self):
         picturesList = os.listdir(self.tempPath)
-
         for i in range(len(picturesList)):
             picturesList[i] = picturesList[i].replace('.jpg', '')
 
@@ -51,4 +49,21 @@ class imageCollector:
         for i in range(len(picturesList)):
             picturesList[i] = picturesList[i] + '.jpg'
 
-        print(picturesList)
+        #print(picturesList)
+
+        PILList = []
+
+        initImg = Image.open(self.tempPath + picturesList[0])
+
+        for i in range(1, len(picturesList)):
+            curImg = Image.open(self.tempPath + picturesList[i])
+            PILList.append(curImg)
+
+        #print(self.path + '\\' + self.title + '.pdf')
+
+        initImg.save(self.path + '\\' + self.title + '.pdf', "PDF", resolution=100.0, save_all=True, append_images=PILList)
+
+        #TODO take the list of images and convert them into a pdf (https://datatofish.com/images-to-pdf-python/)
+        #TODO don't forget to add the complete path first, self.tempPath + picturesList[i]
+        #TODO also store the pdf in the self.path folder, not the self.tempPath folder
+

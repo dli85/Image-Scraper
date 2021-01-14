@@ -66,9 +66,17 @@ if __name__ == '__main__':
 
     for i in linklist:
         current = imageCollector(i, saveLocation)
+        try:
+            current.deleteTemp()
+            print('Temp folder successfully wiped')
+        except:
+            pass
+
+        print('Working on ' + current.title)
+
         current.downloadImages()
 
         current.imgToPdf()
-        input()
-        current.deleteTemp()
-        input('press a key to continue')
+
+        #input('press a key to continue')
+    print('Done')
