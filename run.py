@@ -3,7 +3,7 @@ from imageCollector import imageCollector
 def getLink():
     result = []
 
-    firstq = input('Collect images from a single link? [y/n] ').lower()
+    firstq = input('Collect images from a ONLY single link? [y/n] ').lower()
 
     if(firstq == 'y'):
         result.append(input('Input link: '))
@@ -24,7 +24,13 @@ if __name__ == '__main__':
 
     linklist = getLink()
 
-    for i in linklist:
-        current = imageCollector(i)
+    saveLocation = input('Where would you like to save the output (enter a path): ')
 
+    for i in linklist:
+        current = imageCollector(i, saveLocation)
+        current.downloadImages()
+
+
+
+        current.deleteTemp()
         input('press a key to continue')
