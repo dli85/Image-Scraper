@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import shutil
 import os
+import PIL
 
 class imageCollector:
     def __init__(self, link, path):
@@ -27,7 +28,7 @@ class imageCollector:
 
         for i in range(len(self.imageLinks)):
             currentImageLink = self.imageLinks[i]
-            currFileName = 'Page number ' + str(i+1)
+            currFileName = str(i+1)
 
             saveImagePathComplete = self.tempPath + currFileName + '.jpg'
 
@@ -39,4 +40,15 @@ class imageCollector:
                     shutil.copyfileobj(r.raw, f)
 
 
+    def imgToPdf(self):
+        picturesList = os.listdir(self.tempPath)
 
+        for i in range(len(picturesList)):
+            picturesList[i] = picturesList[i].replace('.jpg', '')
+
+        picturesList.sort(key=int)
+
+        for i in range(len(picturesList)):
+            picturesList[i] = picturesList[i] + '.jpg'
+
+        print(picturesList)
